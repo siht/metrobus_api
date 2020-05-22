@@ -10,7 +10,7 @@ __all__ = (
 class MetrobusesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Metrobus
-        values = ('serie',)
+        fields = ('serie',)
 
 
 class HistorySerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class HistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HistoricalPoint
-        values = ('longitude', 'latitude', 'date_time', 'district__name')
+        fields = ('longitude', 'latitude', 'date_time', 'district__name')
 
 
 class MetrobusSerializer(serializers.ModelSerializer):
@@ -30,4 +30,4 @@ class MetrobusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Metrobus
-        values = ('serie', 'where_i_was')
+        fields = ('serie', 'where_i_was')
