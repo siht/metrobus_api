@@ -1,5 +1,12 @@
 from django.db import models
 
+__all__ = (
+    'District',
+    'Place',
+    'Metrobus',
+    'HistoricalPoint',
+)
+
 
 class District(models.Model):
     name = models.CharField(max_length=15)
