@@ -14,20 +14,28 @@ class MetrobusesSerializer(serializers.ModelSerializer):
 
 
 class HistorySerializer(serializers.ModelSerializer):
-    district = serializers.CharField(source='district__name')
-
+    district = serializers.CharField(source='place.district')
+    latitude = serializers.DecimalField(
+        source='place.latitude',
+        max_digits=9,
+        decimal_places=6
+    )
+    longitude = serializers.DecimalField(
+        source='place.longitude',
+        max_digits=9,
+        decimal_places=6
+    )
     class Meta:
         model = HistoricalPoint
-        fields = ('longitude', 'latitude', 'date_time', 'district__name')
+        fields = ('latitude', 'longitude', 'date_time', 'district')
 
 
 class MetrobusSerializer(serializers.ModelSerializer):
     history = HistorySerializer(
-        source='where_i_was',
-        many=True,
-        read_only=True
+        source='historicalpoint_set',
+        many=True
     )
 
     class Meta:
         model = Metrobus
-        fields = ('serie', 'where_i_was')
+        fields = ('serie', 'history',)
