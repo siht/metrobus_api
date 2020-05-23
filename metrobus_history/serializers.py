@@ -1,10 +1,16 @@
 from rest_framework import serializers
 
-from .models import Metrobus, HistoricalPoint
+from .models import (
+    District,
+    HistoricalPoint,
+    Metrobus,
+)
 
 __all__ = (
-    'MetrobusesSerializer',
+    'DistrictsSerializer',
+    'DistrictMetrobusSerializer',
     'MetrobusSerializer',
+    'MetrobusesSerializer',
 )
 
 class MetrobusesSerializer(serializers.ModelSerializer):
@@ -39,3 +45,17 @@ class MetrobusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Metrobus
         fields = ('serie', 'history',)
+
+
+class DistrictsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        fields = ('name',)
+
+
+class DistrictMetrobusSerializer(serializers.ModelSerializer):
+    district = district = serializers.CharField(source='place.district')
+    metrobuses = MetrobusesSerializer(source='metrobus', many=True)
+    class Meta:
+        model = HistoricalPoint
+        fields = ('district', 'metrobuses')
