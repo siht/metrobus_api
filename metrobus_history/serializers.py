@@ -53,9 +53,11 @@ class DistrictsSerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 
-class DistrictMetrobusSerializer(serializers.ModelSerializer):
-    district = district = serializers.CharField(source='place.district')
-    metrobuses = MetrobusesSerializer(source='metrobus', many=True)
-    class Meta:
-        model = HistoricalPoint
-        fields = ('district', 'metrobuses')
+class SerieNDateSerializer(serializers.Serializer):
+    serie = serializers.CharField(source='metrobus__serie')
+    date_time = serializers.DateTimeField()
+
+
+class DistrictMetrobusSerializer(serializers.Serializer):
+    district = serializers.CharField()
+    history = SerieNDateSerializer(many=True)

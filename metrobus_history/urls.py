@@ -17,5 +17,5 @@ router.register('metrobus', MetrobusListRetrieve)
 urlpatterns = router.urls
 urlpatterns += [
     path('district/', DistrictList.as_view()),
-    path('district/{id}', MetrobusListByDistrict.as_view()),
+    path('district/<int:pk>', MetrobusListByDistrict.as_view()),
 ]
