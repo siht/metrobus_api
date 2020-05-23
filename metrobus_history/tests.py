@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
@@ -14,7 +15,11 @@ from .models import (
 class ModelsTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        district_alvaro_obregon = District.objects.create(name='Álvaro Obregón')
+        district_alvaro_obregon = (
+            District
+            .objects
+            .create(name='Álvaro Obregón')
+        )
         district_alvaro_obregon.save()
         district_cuauhtemoc = District.objects.create(name='Buena Vista')
         district_cuauhtemoc.save()
@@ -83,7 +88,11 @@ class ModelsTests(TestCase):
 class ViewsTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        district_alvaro_obregon = District.objects.create(name='Álvaro Obregón')
+        district_alvaro_obregon = (
+            District
+            .objects
+            .create(name='Álvaro Obregón')
+        )
         district_alvaro_obregon.save()
         district_cuauhtemoc = District.objects.create(name='Cuauhtémoc')
         district_cuauhtemoc.save()
@@ -136,7 +145,6 @@ class ViewsTests(TestCase):
     def test_metrobus_detail(self):
         response = self.client.get('/api/metrobus/1/')
         del(response.data['history'][0]['date_time'])
-        from collections import OrderedDict
         place_data = OrderedDict()
         place_data['latitude'] = '19.347574'
         place_data['longitude'] = '-99.187316'
@@ -148,3 +156,26 @@ class ViewsTests(TestCase):
                 'history': [place_data]
             }
         )
+
+    def test_district_list(self):
+        response = self.client.get('/api/district/')
+        self.assertEqual(
+            response.data,
+            [
+                {'name': 'Álvaro Obregón'},
+                {'name': 'Cuauhtémoc'},
+                {'name': 'Tlalpan'}
+            ]
+        )
+
+    def test_district_detail_metrobuses(self):
+        response = self.client.get('/api/district/1')
+        metrobus_1, metrobus_2 = OrderedDict(), OrderedDict()
+        metrobus_1['serie'], metrobus_2['serie'] = '00001', '00002'
+        del(response.data['history'][0]['date_time'])
+        del(response.data['history'][1]['date_time'])
+        expected_response = {
+            'district': 'Álvaro Obregón',
+            'history': [metrobus_1, metrobus_2]
+        }
+        self.assertEqual(response.data, expected_response)
