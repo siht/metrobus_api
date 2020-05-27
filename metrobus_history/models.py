@@ -8,6 +8,12 @@ __all__ = (
 )
 
 
+class DistrictLimitPoints(models.Model):
+    district = models.ForeignKey('District', on_delete=models.CASCADE)
+    latitude = models.DecimalField(max_digits=17, decimal_places=15)
+    longitude = models.DecimalField(max_digits=18, decimal_places=15)
+
+
 class District(models.Model):
     name = models.CharField(max_length=32)
 
