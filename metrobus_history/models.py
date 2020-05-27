@@ -9,15 +9,15 @@ __all__ = (
 
 
 class District(models.Model):
-    name = models.CharField(max_length=15)
+    name = models.CharField(max_length=32)
 
     def __str__(self):
         return self.name
 
 
 class Place(models.Model):
-    latitude = models.DecimalField(max_digits=12, decimal_places=8)
-    longitude = models.DecimalField(max_digits=12, decimal_places=8)
+    latitude = models.DecimalField(max_digits=14, decimal_places=12)
+    longitude = models.DecimalField(max_digits=15, decimal_places=12)
     district = models.ForeignKey(
         'District',
         null=True,
