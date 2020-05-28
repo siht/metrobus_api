@@ -42,6 +42,13 @@ run with db running
 ./manage.py migrate
 ```
 
+and after run fixtures
+
+```sh
+./manage.py loaddata metrobus_history/fixtures/districts.json
+./manage.py loaddata metrobus_history/fixtures/district_limit_points.json
+```
+
 ## HOW TO RUN
 
 ### DEVELOPMENT
