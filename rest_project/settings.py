@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'graphene_django',
 
     'metrobus_history.apps.MetrobusHistoryConfig',
 ]
@@ -130,4 +131,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}
+
+GRAPHENE = {
+    "SCHEMA": "rest_project.schema.schema",
+    "SCHEMA_INDENT": 2,
+    "MIDDLEWARE": ("graphene_django.debug.DjangoDebugMiddleware",),
 }
