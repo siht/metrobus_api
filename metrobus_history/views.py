@@ -32,6 +32,7 @@ __all__ = (
 
 
 class MetrobusListRetrieve(RetrieveModelMixin, ListModelMixin, GenericViewSet):
+    lookup_field = 'serie'
     queryset = Metrobus.objects.all()
     serializers = {
         'retrieve': MetrobusSerializer,

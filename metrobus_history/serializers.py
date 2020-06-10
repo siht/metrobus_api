@@ -17,6 +17,7 @@ class MetrobusesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Metrobus
         fields = ('serie',)
+        lookup_field = 'serie'
 
 
 class HistorySerializer(serializers.ModelSerializer):
